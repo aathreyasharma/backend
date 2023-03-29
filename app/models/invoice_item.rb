@@ -1,8 +1,7 @@
 class InvoiceItem < ApplicationRecord
-  # extend Listener
   belongs_to :invoice
   belongs_to :product
-
+  validates_presence_of :product_id, :quantity
   before_save :calculate_total
 
   add_db_listener
@@ -13,6 +12,7 @@ class InvoiceItem < ApplicationRecord
   # trigger.after(:delete) do
   #   "UPDATE invoices SET total_price = (SELECT COALESCE(SUM(total_price), 0) FROM invoice_items WHERE invoice_id = invoices.id) WHERE id = OLD.invoice_id"
   # end
+  private
 
   def calculate_total
     self.unit_price = self.product.price if (self.unit_price.nil? || self.unit_price.zero?)

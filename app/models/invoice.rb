@@ -15,6 +15,4 @@ class Invoice < ApplicationRecord
   def calculate_total
     self.total_price =  self.invoice_items.sum(:total_price)
   end
-
-
 end

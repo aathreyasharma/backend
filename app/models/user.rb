@@ -1,13 +1,11 @@
 class User < ApplicationRecord
   has_many :products
   before_save :create_email, :set_age
+  validates :email, presence: true
 
   has_many :invoices
 
   def create_email
-
-    binding.pry
-
     self.email = "#{self.name}@gmail.com" if self.email.nil?
   end
 

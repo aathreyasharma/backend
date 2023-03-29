@@ -6,5 +6,4 @@ class DbEventJob < ApplicationJob
     klass = "#{table_name.classify}Processor".constantize
     klass.new(event, payload).call
   end
-
 end

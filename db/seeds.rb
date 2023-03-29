@@ -26,9 +26,9 @@ Product.create(name: "PostgreSQL", user: users.first, price: random_price)
 Product.create(name: "Python", user: users.first, price: random_price)
 Product.create(name: "GitHub", user: users.first, price: random_price)
 
-(0..5).each do |_|
+(1..5).each do |_|
   invoice = Invoice.new(user: User.take)
-  (0..10).each do |_|
+  (1..10).each do |_|
     invoice.invoice_items.build(quantity: rand(1..10), product: Product.take)
   end
   invoice.save
