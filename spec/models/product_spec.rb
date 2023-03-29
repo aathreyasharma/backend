@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Product, type: :model do
-  describe "a Product" do
-    let(:user) { FactoryBot.create(:user) }
-    it "creates a product" do
+
+  let(:user) { FactoryBot.create(:user) }
+
+  describe "successfully" do
+    it "creates a product with a user" do
       Product.create(
         name: Faker::Commerce.name,
         price: Faker::Commerce.price,
@@ -11,8 +13,10 @@ RSpec.describe Product, type: :model do
       )
       expect(Product.count).to eq(1)
     end
+  end
 
-    it "does not creates a product without a user" do
+  describe "failed" do
+    it "to create a product without a user" do
       Product.create(
         name: Faker::Commerce.name,
         price: Faker::Commerce.price

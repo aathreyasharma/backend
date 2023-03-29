@@ -5,6 +5,8 @@ class InvoiceItemProcessor
   end
 
   def call
-    puts @payload.inspect
+    puts "Control in InvoiceItemProcessor"
+    # puts @payload.inspect
+    "Item Processed"
   end
 end

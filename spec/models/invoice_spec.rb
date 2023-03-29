@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Invoice, type: :model do
   let(:user) { FactoryBot.create(:user) }
-  describe "without items" do
-    it "creates an invoice without items" do
+  describe "successfully" do
+    it "created without items" do
       invoice = Invoice.create(
         user: user
       )
@@ -11,10 +11,8 @@ RSpec.describe Invoice, type: :model do
       expect(invoice.user_id).to eq(user.id)
       expect(invoice.total_price).to eq(0)
     end
-  end
 
-  describe "with items" do
-    it "creates an invoice with items" do
+    it "created with items" do
       invoice = Invoice.create(
         user: user
       )
