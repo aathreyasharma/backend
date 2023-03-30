@@ -85,8 +85,15 @@ To handle such a scenario, we are using [**Triggers**](https://www.postgresql.or
   - [`DatabaseListener`](https://github.com/aathreyasharma/backend/blob/main/app/services/database_listener.rb) is a listener service that is used to capture events occured at database level
     - It listen to multiple channels by opening async connection and processes the received message
   - [`DbEventJob`](https://github.com/aathreyasharma/backend/blob/main/app/jobs/db_event_job.rb) is used by the listener to queue the payload for further processing. It calls appropriate processor(service) to process further
-  - [`InvoiceItemProcessor`](https://github.com/aathreyasharma/backend/blob/main/app/event_processors/invoice_item_processor.rb) A processor 
+  - [`InvoiceItemProcessor`](https://github.com/aathreyasharma/backend/blob/main/app/event_processors/invoice_item_processor.rb) A processor dedicated to handle events on InvoiceItem
 
 * How to run the test suite
+  - Tests are written with RSpec
+  - To prepare the DB
+    - `RAILS_ENV=test rails db:create db:migrate`
+  - Run command `rspec` to run all the test cases
+  - Reset the **test** database
+    - Sometimes we might want to completely reset the test database. It may be because of various reasons like a failed migration or existance of stale data, or something else. Existance of stale data might also sometimes fail test cases randomly. In such cases we can completely remake the DB.
+    - `RAILS_ENV=test rails db:drop db:create db:migrate`
 
 * ...
