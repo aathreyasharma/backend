@@ -23,6 +23,6 @@ class DatabaseListener
 
   def self.process_notification(table_name, payload)
     event, object = payload.split('-', 2)
-    DbEventJob.new.perform(table_name, event, object)
+    DbEventJob.perform_later(table_name, event, object)
   end
 end
