@@ -46,8 +46,11 @@ group :development, :test do
   gem "pry"
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 6.0.0'
-  gem 'rspec-sidekiq'
   gem 'faker'
+end
+
+group :test do
+  gem 'rspec-sidekiq'
 end
 
 group :development do

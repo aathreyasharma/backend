@@ -5,8 +5,11 @@ class InvoiceItemProcessor
   end
 
   def call
-    puts "Control in InvoiceItemProcessor"
-    # puts @payload.inspect
-    "Item Processed"
+    invoice = Invoice.find_by(id: @payload['invoice_id'])
+    if invoice
+      invoice.save  # recompute totals
+    else
+      false
+    end
   end
 end
