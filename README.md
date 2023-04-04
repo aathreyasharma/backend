@@ -1,6 +1,6 @@
 # README
 The implementation is a solution to handle and solves for potential data inconsistency.
-This rails app is an **API** only implementation. 
+This rails app is an **API** only implementation.
 The app provides a solution for the following problem statement.
 
 EX: Let us suppose we have two tables, `invoice` and `invoice_items`. We store the sum of all `invoice_items` as `total_price` on the `invoice` table. If a user updates an `invoice_item` directly on the database, we have no way of knowing the event and no callbacks are invoked on the application server.
@@ -28,7 +28,7 @@ To handle such a scenario, we are using [**Triggers**](https://www.postgresql.or
   - [hairtrigger](https://github.com/jenseng/hair_trigger) -> 1.0.0
     - `hairtrigger` is a database agnostic library that allows us to easily manage the necessary migrations that are required to create triggers on the database
     - Though trigger procedures can directly be created on the database without any gems, it's better to use the gem because it allows us to add the trigger definitions on the Model level. It helps us keep track of the procedures on the database at the application level. If a trigger is directly added on the database, it becomes difficult to understand, track and debug the changes that occur in the database behind the scenes because of the triggers.
-    
+
   - sidekiq -> 7.0.7
     - To handle jobs async
 
@@ -63,13 +63,16 @@ To handle such a scenario, we are using [**Triggers**](https://www.postgresql.or
    - run `bundle exec sidekiq` on a new terminal to start sidekiq
    - Go to `http://localhost:3000/sidekiq` to monitor the queues
    And you are all set!
- 
+
 * Extensability
   - The model `InvoiceItem` or more precisely the table `invoice_items` is now being listened to for any events
   - The way this is done is by including the concern that is defined in the module [`DatabaseListenable`](https://github.com/aathreyasharma/backend/blob/main/app/models/concerns/database_listenable.rb) called `add_db_listener` ([here](https://github.com/aathreyasharma/backend/blob/3432f99e05c5cb4f1fb83b91880e13c3c1cf701d/app/models/concerns/database_listenable.rb#L4))
   - This is where we keep a track of all the tables that are to be listened to for any changes (`listening_klasses`)
   - Steps to make it work across models:
     - Add `add_db_listener` in your model
+      - You can also pass optional parameters to specify the type of event the trigger is supposed to handle
+      - The allowed parameters are `:create`, `:update` and `:delete`
+      Ex: `add_db_listener :create, :update` adds a trigger for teh event CREATE and UPDATE
     - It adds the the necessary triggers to your model
     - It helps keep track of all the model names that are to be listened to
     - run `rake db:generate_trigger_migration`
